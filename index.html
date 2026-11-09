@@ -1,0 +1,367 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AdminDesk | Dashboard</title>
+  <link rel="stylesheet" href="vendor/bootstrap.min.css">
+  <link rel="stylesheet" href="styles.css">
+  <script src="vendor/bootstrap.bundle.min.js" defer></script>
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <a class="visually-hidden-focusable" href="#mainContent">Skip to content</a>
+
+  <div class="portal d-lg-flex">
+    <aside class="offcanvas-lg offcanvas-start sidebar border-end" id="sidebar" tabindex="-1" aria-labelledby="sidebarTitle">
+      <div class="d-flex align-items-center justify-content-between p-3 border-bottom">
+        <a id="sidebarTitle" href="#dashboard" class="fw-bold text-decoration-none">AdminDesk</a>
+        <button type="button" class="btn-close d-lg-none" data-bs-dismiss="offcanvas" data-bs-target="#sidebar" aria-label="Close menu"></button>
+      </div>
+      <div class="offcanvas-body d-block p-3">
+        <nav class="nav nav-pills flex-column gap-1" aria-label="Main navigation">
+          <a class="nav-link active" href="#dashboard" data-page="dashboard" aria-current="page">Dashboard</a>
+          <a class="nav-link" href="#users" data-page="users">User management</a>
+          <a class="nav-link" href="#registration" data-page="registration">Registration</a>
+          <a class="nav-link" href="#settings" data-page="settings">Settings</a>
+        </nav>
+      </div>
+    </aside>
+
+    <div class="workspace flex-grow-1 bg-light min-vh-100">
+      <header class="navbar bg-white border-bottom px-3">
+        <div class="d-flex align-items-center gap-2 gap-sm-3">
+          <button class="btn btn-sm btn-outline-secondary d-lg-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebar" aria-controls="sidebar">Menu</button>
+          <button id="desktopToggle" class="btn btn-sm btn-outline-secondary d-none d-lg-inline-block" type="button" aria-controls="sidebar" aria-expanded="true">Hide menu</button>
+          <nav aria-label="Breadcrumb">
+            <ol class="breadcrumb mb-0 small">
+              <li class="breadcrumb-item active" id="breadcrumb" aria-current="page">Dashboard</li>
+            </ol>
+          </nav>
+        </div>
+        <div class="dropdown">
+          <button class="btn btn-sm btn-outline-secondary account-button dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <span class="d-sm-none">Account</span>
+            <span class="d-none d-sm-inline-block text-truncate" id="adminName">Administrator</span>
+          </button>
+          <ul class="dropdown-menu dropdown-menu-end">
+            <li><a class="dropdown-item" href="#settings">Account settings</a></li>
+            <li><a class="dropdown-item" href="#users">User management</a></li>
+          </ul>
+        </div>
+      </header>
+
+      <main id="mainContent" class="container-fluid p-3 p-lg-4" tabindex="-1">
+        <section id="dashboard" aria-labelledby="dashboardTitle">
+          <div class="mb-3">
+            <h1 id="dashboardTitle" tabindex="-1">Dashboard</h1>
+            <p class="text-body-secondary mb-0">See who’s active and what’s changed in your workspace.</p>
+          </div>
+
+          <div class="card mb-4">
+            <div class="card-body">
+              <h2 class="h4 text-break">Welcome back, <span id="welcomeName">Admin</span>.</h2>
+              <p class="card-text">Manage users and review recent account changes.</p>
+              <a class="btn btn-primary" href="#users">Manage users</a>
+            </div>
+          </div>
+
+          <h2 class="h5">User summary</h2>
+          <div class="row g-3 mb-4">
+            <div class="col-6 col-lg-3">
+              <div class="card h-100">
+                <div class="card-body">
+                  <h3 class="h6">Total users</h3>
+                  <p class="fs-3 mb-0" id="totalCount">0</p>
+                </div>
+              </div>
+            </div>
+            <div class="col-6 col-lg-3">
+              <div class="card h-100">
+                <div class="card-body">
+                  <h3 class="h6">Active users</h3>
+                  <p class="fs-3 text-success mb-0" id="activeCount">0</p>
+                </div>
+              </div>
+            </div>
+            <div class="col-6 col-lg-3">
+              <div class="card h-100">
+                <div class="card-body">
+                  <h3 class="h6">Pending users</h3>
+                  <p class="fs-3 text-warning-emphasis mb-0" id="pendingCount">0</p>
+                </div>
+              </div>
+            </div>
+            <div class="col-6 col-lg-3">
+              <div class="card h-100">
+                <div class="card-body">
+                  <h3 class="h6">Inactive users</h3>
+                  <p class="fs-3 text-secondary mb-0" id="inactiveCount">0</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="row g-3 align-items-start">
+            <div class="col-md-7">
+              <section class="card" aria-labelledby="activityTitle">
+                <div class="card-header">
+                  <h2 class="h5 mb-0" id="activityTitle">Recent activity</h2>
+                </div>
+                <ul class="list-group list-group-flush" id="activityList"></ul>
+              </section>
+            </div>
+            <div class="col-md-5">
+              <section class="card mb-3" aria-labelledby="statusTitle">
+                <div class="card-header d-flex justify-content-between align-items-center gap-2">
+                  <h2 class="h5 mb-0" id="statusTitle">Account status</h2>
+                  <button type="button" class="btn btn-sm btn-outline-secondary" data-bs-toggle="tooltip" data-bs-title="Percentages are based on all current user accounts.">Help</button>
+                </div>
+                <div class="card-body" id="statusOverview"></div>
+              </section>
+              <div class="accordion" id="statusHelp">
+                <div class="accordion-item">
+                  <h2 class="accordion-header">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#statusGuide" aria-expanded="false" aria-controls="statusGuide">What do account statuses mean?</button>
+                  </h2>
+                  <div id="statusGuide" class="accordion-collapse collapse" data-bs-parent="#statusHelp">
+                    <div class="accordion-body small"><strong>Active</strong> accounts have access. <strong>Pending</strong> accounts await review. <strong>Inactive</strong> accounts have access disabled.</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section id="users" aria-labelledby="usersTitle" hidden>
+          <div class="mb-3 d-flex flex-wrap align-items-end justify-content-between gap-3">
+            <div>
+              <h1 id="usersTitle" tabindex="-1">User management</h1>
+              <p class="text-body-secondary mb-0">Search, filter, and update user accounts.</p>
+            </div>
+            <button type="button" class="btn btn-primary" id="addUser" data-bs-toggle="modal" data-bs-target="#userModal">Add user</button>
+          </div>
+          <div class="card">
+            <div class="p-3 p-sm-4 border-bottom">
+              <h2 class="h5 mb-3">User directory</h2>
+              <div class="row g-3 align-items-end">
+                <div class="col-sm-7 col-lg-6">
+                  <label class="form-label" for="searchUsers">Search users</label>
+                  <div class="input-group">
+                    <span class="input-group-text" aria-hidden="true">Find</span>
+                    <input class="form-control" type="search" id="searchUsers" placeholder="Search by name, email, or role">
+                  </div>
+                </div>
+                <div class="col-sm-5 col-lg-3">
+                  <label class="form-label" for="statusFilter">Account status</label>
+                  <select class="form-select" id="statusFilter">
+                    <option value="">All statuses</option><option>Active</option><option>Pending</option><option>Inactive</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="table-responsive" tabindex="0" role="region" aria-label="User directory, scroll for more columns">
+              <table class="table table-hover align-middle mb-0">
+                <caption class="visually-hidden">Registered user accounts</caption>
+                <thead class="table-light"><tr>
+                  <th scope="col">User</th><th scope="col">Role</th><th scope="col">Registered</th>
+                  <th scope="col">Status</th><th scope="col" class="text-end">Actions</th>
+                </tr></thead>
+                <tbody id="userRows"></tbody>
+              </table>
+            </div>
+            <div class="p-3 p-sm-4 d-flex flex-wrap align-items-center justify-content-between gap-3 border-top">
+              <p id="userResults" class="small text-body-secondary mb-0" role="status"></p>
+              <nav aria-label="User pages"><ul id="pagination" class="pagination pagination-sm flex-wrap mb-0"></ul></nav>
+            </div>
+          </div>
+        </section>
+
+        <section id="registration" aria-labelledby="registrationTitle" hidden>
+          <div class="mb-3">
+            <h1 id="registrationTitle" tabindex="-1">Registration</h1>
+            <p class="text-body-secondary mb-0">Register a new user for account review.</p>
+          </div>
+          <div class="card form-card">
+            <div class="card-header"><h2 class="h5 mb-0">New user details</h2></div>
+            <form id="registrationForm" class="card-body" novalidate>
+              <p class="text-body-secondary">All fields are required except the profile image.</p>
+              <div class="row g-3">
+                <div class="col-md-6">
+                  <label class="form-label" for="regName">Full name</label>
+                  <input class="form-control" id="regName" name="name" autocomplete="name" required minlength="2" maxlength="60" aria-describedby="regNameError">
+                  <div class="invalid-feedback" id="regNameError">Enter at least two characters.</div>
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label" for="regEmail">Email address</label>
+                  <input class="form-control" type="email" id="regEmail" name="email" autocomplete="email" required maxlength="100" aria-describedby="regEmailError">
+                  <div class="invalid-feedback" id="regEmailError">Enter a valid, unused email address.</div>
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label" for="regPhone">Phone number</label>
+                  <input class="form-control" type="tel" id="regPhone" name="phone" autocomplete="tel" required maxlength="24" aria-describedby="regPhoneError">
+                  <div class="invalid-feedback" id="regPhoneError">Enter a phone number with 7 to 15 digits.</div>
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label" for="regDepartment">Department</label>
+                  <select class="form-select" id="regDepartment" name="department" required aria-describedby="regDepartmentError">
+                    <option value="">Choose a department</option><option>Engineering</option><option>Design</option><option>Operations</option><option>Support</option>
+                  </select>
+                  <div class="invalid-feedback" id="regDepartmentError">Choose a department.</div>
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label" for="regPassword">Password</label>
+                  <input class="form-control" type="password" id="regPassword" name="password" autocomplete="new-password" required minlength="8" aria-describedby="regPasswordHelp regPasswordError">
+                  <div class="form-text" id="regPasswordHelp">Use at least 8 characters.</div>
+                  <div class="invalid-feedback" id="regPasswordError">Enter a password with at least 8 characters.</div>
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label" for="regConfirm">Confirm password</label>
+                  <input class="form-control" type="password" id="regConfirm" name="confirm" autocomplete="new-password" required aria-describedby="regConfirmError">
+                  <div class="invalid-feedback" id="regConfirmError">Enter the same password again.</div>
+                </div>
+                <fieldset class="col-12">
+                  <legend class="form-label">Gender</legend>
+                  <div class="form-check form-check-inline"><input class="form-check-input" type="radio" id="genderWoman" name="gender" value="Woman" required aria-describedby="regGenderError"><label class="form-check-label" for="genderWoman">Woman</label></div>
+                  <div class="form-check form-check-inline"><input class="form-check-input" type="radio" id="genderMan" name="gender" value="Man" aria-describedby="regGenderError"><label class="form-check-label" for="genderMan">Man</label></div>
+                  <div class="form-check form-check-inline"><input class="form-check-input" type="radio" id="genderOther" name="gender" value="Prefer not to say" aria-describedby="regGenderError"><label class="form-check-label" for="genderOther">Prefer not to say</label></div>
+                  <div class="invalid-feedback" id="regGenderError">Select one option.</div>
+                </fieldset>
+                <div class="col-12">
+                  <label class="form-label" for="regImage">Profile image <span class="fw-normal text-body-secondary">(optional)</span></label>
+                  <input class="form-control" type="file" id="regImage" name="image" accept="image/png,image/jpeg,image/webp" aria-describedby="regImageHelp regImageError">
+                  <div class="form-text" id="regImageHelp">JPG, PNG, or WebP up to 500 KB.</div>
+                  <div class="invalid-feedback" id="regImageError">Choose a JPG, PNG, or WebP file up to 500 KB.</div>
+                </div>
+                <div class="col-12">
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="regTerms" name="terms" required aria-describedby="regTermsHelp regTermsError">
+                    <label class="form-check-label" for="regTerms">I accept the terms and conditions.</label>
+                    <div class="form-text" id="regTermsHelp">Use sample details only. This practice portal stores records in this browser.</div>
+                    <div class="invalid-feedback" id="regTermsError">Accept the terms to continue.</div>
+                  </div>
+                </div>
+              </div>
+              <button type="submit" class="btn btn-primary mt-4">Register user</button>
+            </form>
+          </div>
+        </section>
+
+        <section id="settings" aria-labelledby="settingsTitle" hidden>
+          <div class="mb-3">
+            <h1 id="settingsTitle" tabindex="-1">Settings</h1>
+            <p class="text-body-secondary mb-0">Update your profile, account, password, and notifications.</p>
+          </div>
+          <div class="card form-card">
+            <ul class="nav nav-tabs small px-2 pt-2" role="tablist" aria-label="Settings sections">
+              <li class="nav-item" role="presentation"><button class="nav-link active" id="profileTab" data-bs-toggle="tab" data-bs-target="#profilePane" type="button" role="tab" aria-controls="profilePane" aria-selected="true">Profile</button></li>
+              <li class="nav-item" role="presentation"><button class="nav-link" id="accountTab" data-bs-toggle="tab" data-bs-target="#accountPane" type="button" role="tab" aria-controls="accountPane" aria-selected="false">Account</button></li>
+              <li class="nav-item" role="presentation"><button class="nav-link" id="passwordTab" data-bs-toggle="tab" data-bs-target="#passwordPane" type="button" role="tab" aria-controls="passwordPane" aria-selected="false">Password</button></li>
+              <li class="nav-item" role="presentation"><button class="nav-link" id="notificationsTab" data-bs-toggle="tab" data-bs-target="#notificationsPane" type="button" role="tab" aria-controls="notificationsPane" aria-selected="false">Notifications</button></li>
+            </ul>
+            <div class="tab-content p-3 p-sm-4">
+              <div class="tab-pane fade show active" id="profilePane" role="tabpanel" aria-labelledby="profileTab" tabindex="0">
+                <h2 class="h5">Profile settings</h2>
+                <p class="text-body-secondary">Choose how your name appears in the workspace.</p>
+                <form id="profileForm" novalidate>
+                  <label class="form-label" for="profileName">Display name</label>
+                  <input class="form-control" id="profileName" name="name" required minlength="2" maxlength="40" aria-describedby="profileNameError">
+                  <div class="invalid-feedback" id="profileNameError">Enter at least two characters.</div>
+                  <button type="submit" class="btn btn-primary mt-3">Save profile</button>
+                </form>
+              </div>
+              <div class="tab-pane fade" id="accountPane" role="tabpanel" aria-labelledby="accountTab" tabindex="0">
+                <h2 class="h5">Account settings</h2>
+                <p class="text-body-secondary">Set the email address for this demo admin account.</p>
+                <form id="accountForm" novalidate>
+                  <label class="form-label" for="accountEmail">Account email</label>
+                  <input class="form-control" type="email" id="accountEmail" name="email" required maxlength="100" aria-describedby="accountEmailError">
+                  <div class="invalid-feedback" id="accountEmailError">Enter a valid email address.</div>
+                  <button type="submit" class="btn btn-primary mt-3">Save account</button>
+                </form>
+              </div>
+              <div class="tab-pane fade" id="passwordPane" role="tabpanel" aria-labelledby="passwordTab" tabindex="0">
+                <h2 class="h5">Change password</h2>
+                <p class="text-body-secondary">The starting demo password is <code>Admin1234</code>. Password changes last until you reload this page.</p>
+                <form id="passwordForm" novalidate>
+                  <div class="mb-3">
+                    <label class="form-label" for="currentPassword">Current password</label>
+                    <input class="form-control" type="password" id="currentPassword" name="current" autocomplete="current-password" required aria-describedby="currentPasswordError">
+                    <div class="invalid-feedback" id="currentPasswordError">Enter the current demo password.</div>
+                  </div>
+                  <div class="mb-3">
+                    <label class="form-label" for="newPassword">New password</label>
+                    <input class="form-control" type="password" id="newPassword" name="password" autocomplete="new-password" required minlength="8" aria-describedby="newPasswordError">
+                    <div class="invalid-feedback" id="newPasswordError">Use at least 8 characters and choose a different password.</div>
+                  </div>
+                  <div class="mb-3">
+                    <label class="form-label" for="confirmPassword">Confirm new password</label>
+                    <input class="form-control" type="password" id="confirmPassword" name="confirm" autocomplete="new-password" required aria-describedby="confirmPasswordError">
+                    <div class="invalid-feedback" id="confirmPasswordError">Enter the same new password again.</div>
+                  </div>
+                  <button type="submit" class="btn btn-primary">Change password</button>
+                </form>
+              </div>
+              <div class="tab-pane fade" id="notificationsPane" role="tabpanel" aria-labelledby="notificationsTab" tabindex="0">
+                <h2 class="h5">Notification preferences</h2>
+                <p class="text-body-secondary">Choose which account changes show a toast in this browser.</p>
+                <form id="notificationsForm">
+                  <div class="form-check form-switch mb-2"><input class="form-check-input" type="checkbox" role="switch" id="notifyNew"><label class="form-check-label" for="notifyNew">New accounts</label></div>
+                  <div class="form-check form-switch mb-2"><input class="form-check-input" type="checkbox" role="switch" id="notifyChanges"><label class="form-check-label" for="notifyChanges">Account updates and removals</label></div>
+                  <button type="submit" class="btn btn-primary mt-3">Save preferences</button>
+                </form>
+              </div>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+
+  <div class="modal fade" id="userModal" tabindex="-1" aria-labelledby="userModalTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+      <form id="userForm" class="modal-content" novalidate>
+        <div class="modal-header">
+          <h2 class="modal-title fs-5" id="userModalTitle">Add user</h2>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="mb-3">
+            <label class="form-label" for="userName">Full name</label>
+            <input class="form-control" id="userName" name="name" required minlength="2" maxlength="60" aria-describedby="userNameError">
+            <div class="invalid-feedback" id="userNameError">Enter at least two characters.</div>
+          </div>
+          <div class="mb-3">
+            <label class="form-label" for="userEmail">Email address</label>
+            <input class="form-control" id="userEmail" name="email" type="email" required maxlength="100" aria-describedby="userEmailError">
+            <div class="invalid-feedback" id="userEmailError">Enter a valid, unused email address.</div>
+          </div>
+          <div class="row g-3">
+            <div class="col-sm-6"><label class="form-label" for="userRole">Role</label><select class="form-select" id="userRole" name="role"><option>Member</option><option>Manager</option><option>Admin</option></select></div>
+            <div class="col-sm-6"><label class="form-label" for="userStatus">Status</label><select class="form-select" id="userStatus" name="status"><option>Pending</option><option>Active</option><option>Inactive</option></select></div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
+          <button type="submit" class="btn btn-primary">Save user</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteTitle" aria-describedby="deleteDescription" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered"><div class="modal-content">
+      <div class="modal-header"><h2 class="modal-title fs-5" id="deleteTitle">Delete user</h2><button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button></div>
+      <div class="modal-body" id="deleteDescription">Remove <strong id="deleteName"></strong> from the user directory?</div>
+      <div class="modal-footer"><button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal" id="cancelDelete">Cancel</button><button type="button" class="btn btn-danger" id="confirmDelete">Delete user</button></div>
+    </div></div>
+  </div>
+
+  <div class="toast-container position-fixed bottom-0 end-0 p-3" role="status" aria-live="polite" aria-atomic="true">
+    <div class="toast" id="messageToast">
+      <div class="toast-header"><strong class="me-auto">AdminDesk</strong><button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close message"></button></div>
+      <div class="toast-body" id="toastMessage"></div>
+    </div>
+  </div>
+</body>
+</html>

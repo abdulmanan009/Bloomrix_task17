@@ -1,0 +1,65 @@
+Software Engineering / CSS
+17 - Bootstrap 5 and Component-Based UI Development
+Description
+Study the concepts below and practice each one in a small example. Use the official Bootstrap documentation, build individual component examples, and understand how Bootstrap handles responsive layouts and component styling rather than simply copying existing templates.
+
+· Bootstrap introduction: Bootstrap 5 architecture, advantages, CDN integration, local installation, CSS and JavaScript bundles, and differences between Bootstrap and traditional CSS.
+
+· Bootstrap grid system: containers, container-fluid, rows, columns, nested grids, column sizing, gutters, breakpoints, and responsive layouts.
+
+· Responsive breakpoints: extra small, small, medium, large, extra large, and extra extra large screens; mobile-first development and responsive column behavior.
+
+· Bootstrap layout utilities: display, flexbox, alignment, justification, positioning, spacing, sizing, overflow, and responsive visibility classes.
+
+· Typography and colors: headings, text utilities, font weights, text alignment, background colors, contextual colors, and text emphasis.
+
+· Bootstrap components: navbar, buttons, button groups, cards, badges, alerts, breadcrumbs, pagination, progress bars, list groups, and spinners.
+
+· Interactive Bootstrap components: modals, dropdowns, collapse, accordions, tabs, tooltips, popovers, offcanvas, and toast notifications.
+
+· Bootstrap forms: form controls, input groups, floating labels, form-select, checkboxes, radio buttons, switches, validation states, and feedback messages.
+
+· Bootstrap tables: responsive tables, striped rows, bordered tables, hover states, contextual table classes, and table alignment.
+
+· Bootstrap customization: overriding default styles, CSS variables, custom color schemes, typography customization, custom component styling, and avoiding unnecessary !important declarations.
+
+· Bootstrap JavaScript: data attributes, component initialization, event handling, programmatic component control, and interaction between Bootstrap components and custom JavaScript.
+
+· Bootstrap accessibility: semantic HTML, accessible labels, keyboard navigation, focus states, modal accessibility, ARIA attributes, and color contrast.
+
+· Production considerations: using the correct Bootstrap version, minimizing unnecessary overrides, organizing custom CSS, and avoiding conflicts between Bootstrap and application styles.
+
+Instructions
+Learn how to build professional, responsive web interfaces using Bootstrap 5. Understand its grid system, predefined components, utility classes, customization options, and JavaScript-powered UI components.
+
+Assignment Details
+Description
+Build a complete admin management portal using Bootstrap 5. The project should demonstrate proper use of Bootstrap's grid system, components, utilities, forms, responsive layouts, and JavaScript interactions.
+
+· Create an admin dashboard with a responsive navigation bar, sidebar, page heading, welcome section, and dashboard summary cards showing total users, active users, pending users, and inactive users.
+
+· Create a recent activities section with activity descriptions, timestamps, user information, status badges, and progress indicators.
+
+· Develop a user management page containing a responsive table with at least 10 sample users. Include profile images, names, email addresses, roles, registration dates, and account statuses.
+
+· Implement user search, status filtering, and pagination using vanilla JavaScript. The search and filters should work with the sample records rather than being static UI elements.
+
+· Create Add User and Edit User forms using Bootstrap modals. Implement Delete User confirmation using a modal or another appropriate Bootstrap component.
+
+· Develop a user registration page containing name, email, phone, password, confirm password, gender, department, profile image, and terms and conditions fields.
+
+· Implement client-side form validation using JavaScript and Bootstrap validation classes. Display appropriate validation feedback and prevent invalid submissions.
+
+· Create a settings page with profile settings, account settings, password change, and notification preferences. Use Bootstrap tabs or another suitable component to organize the sections.
+
+· Implement a collapsible sidebar that works on desktop and mobile. Use Bootstrap's responsive utilities and JavaScript components where appropriate.
+
+· Implement interactive Bootstrap components such as dropdowns, accordions, tooltips, toast notifications, and modals. Ensure that each component performs its intended action.
+
+· Use Bootstrap's grid system and responsive utilities to support mobile, tablet, and desktop layouts. Avoid fixed widths that cause horizontal scrolling.
+
+· Customize the Bootstrap theme using CSS variables and additional CSS for branding. Keep custom styling separate from Bootstrap's original styles.
+
+· Use appropriate semantic HTML, accessible labels, keyboard focus states, and readable color contrast.
+
+· Test the dashboard, forms, tables, modals, and navigation at different screen sizes. Submit screenshots showing desktop, tablet, and mobile layouts.

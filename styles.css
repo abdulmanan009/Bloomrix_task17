@@ -1,0 +1,61 @@
+/* Bootstrap supplies the layout and component styles. */
+:root {
+  --portal-blue: #245389;
+  --portal-blue-dark: #1a3e66;
+}
+
+/* Set the brand color on Bootstrap buttons and navigation. */
+.btn-primary {
+  --bs-btn-bg: var(--portal-blue);
+  --bs-btn-border-color: var(--portal-blue);
+  --bs-btn-hover-bg: var(--portal-blue-dark);
+  --bs-btn-hover-border-color: var(--portal-blue-dark);
+  --bs-btn-active-bg: var(--portal-blue-dark);
+  --bs-btn-active-border-color: var(--portal-blue-dark);
+}
+
+.sidebar .nav-pills {
+  --bs-nav-pills-link-active-bg: var(--portal-blue);
+}
+
+.workspace {
+  min-width: 0;
+}
+
+#adminName {
+  max-width: 10rem;
+  vertical-align: middle;
+}
+
+.form-card {
+  max-width: 54rem;
+}
+
+.user-cell {
+  min-width: 13rem;
+}
+
+.user-avatar {
+  width: 2rem;
+  height: 2rem;
+}
+
+.was-validated fieldset:invalid .invalid-feedback {
+  display: block;
+}
+
+.toast-container {
+  max-width: 100%;
+}
+
+/* Keep the sidebar beside the page on desktop. Bootstrap handles mobile. */
+@media (min-width: 992px) {
+  .sidebar {
+    flex: 0 0 13rem;
+  }
+
+  .sidebar-collapsed .sidebar {
+    display: none;
+  }
+}
+
